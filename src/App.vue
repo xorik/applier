@@ -2,16 +2,7 @@
   .container.vh-100
     .row.h-50
       .col-6.h-75
-        .row.h-100
-          .col-6.h-100.d-flex.flex-column
-            SortableList(title="Category:")
-          .col-6.h-100.d-flex.flex-column
-            SortableList(title="Text:")
-          .col-12
-            button.btn.btn-primary
-              fa(icon="plus")
-              |
-              | Add category
+        Dictionary.h-100
       .col-6.h-75
         .row.h-100
           .col-12.h-100
@@ -24,11 +15,11 @@
               |
               | Quote selected
     .row.h-50
-      .col-6.h-100
-        .card.mb-2
-          .card-header.py-1
-            fa.mr-1(icon="sort")
-            | Category - Text
+      draggable.col-6.h-100(handle=".fa-sort" ghost-class="bg-secondary")
+        .card.mb-2(v-for="i in 10" :key="i")
+          .card-header.py-1.px-2
+            fa.mr-1.text-muted(icon="sort")
+            | Category - Text - {{ i }}
             .float-right
               fa.mr-1(icon="check")
               fa(icon="times")
@@ -53,10 +44,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import SortableList from '@/components/SortableList.vue'
+import Dictionary from '@/components/Dictionary.vue'
 
 @Component({
-  components: { SortableList },
+  components: { Dictionary },
 })
 export default class App extends Vue {}
 </script>
