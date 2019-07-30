@@ -4,7 +4,7 @@
       v-for="item in items"
       :key="item.id"
       :class="{active: currentId === item.id}"
-      @click.prevent="select(item.id)"
+      @click.prevent="select(item)"
     )
       fa.mr-1.text-muted(icon="sort")
       .float-right
@@ -29,8 +29,8 @@ export default class SortableList extends Vue {
   })
   public currentId!: number | null
 
-  public select(id: number): void {
-    this.$emit('select', id)
+  public select(item: Category | Text): void {
+    this.$emit('select', item)
   }
 }
 </script>

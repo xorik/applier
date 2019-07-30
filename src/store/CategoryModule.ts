@@ -38,14 +38,22 @@ export class CategoryModule extends VuexModule {
 
   public currentCategoryId: number | null = null
 
+  get currentCategory(): Category | null {
+    if (this.currentCategoryId === null) {
+      return null
+    }
+
+    return this.categories.find(
+      (category: Category): boolean => category.id === this.currentCategoryId,
+    )!
+  }
+
   get currentTexts(): Text[] {
     if (this.currentCategoryId === null) {
       return []
     }
 
-    return this.categories.find(
-      (category: Category): boolean => category.id === this.currentCategoryId,
-    )!.texts
+    return this.currentCategory!.texts
   }
 
   @Mutation

@@ -1,11 +1,11 @@
 <template lang="pug">
-  .row.h-100
+  .row
     .col-6.h-100.d-flex.flex-column
       label Category:
       SortableList(:items="categories" :current-id="currentCategory" @select="selectCategory")
     .col-6.h-100.d-flex.flex-column
       label Text:
-      SortableList(:items="texts")
+      SortableList(:items="texts" @select="selectText")
     .col-12
       button.btn.btn-primary(@click="addCategory")
         fa(icon="plus")
@@ -16,7 +16,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import SortableList from './SortableList.vue'
-import { categoryModule } from '@/store'
+import { categoryModule, textModule } from '@/store'
 import { Category, Text } from '@/store/CategoryModule'
 
 @Component({
@@ -42,8 +42,16 @@ export default class Dictionary extends Vue {
     }
   }
 
-  public selectCategory(id: number): void {
-    categoryModule.setCurrentCategory(id)
+  public selectCategory(category: Category): void {
+    categoryModule.setCurrentCategory(category.id)
+  }
+
+  public selectText(text: Text): void {
+    textModule.addText({
+      content: text.text,
+      category: categoryModule.currentCategory!,
+      text,
+    })
   }
 }
 </script>

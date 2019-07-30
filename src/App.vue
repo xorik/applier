@@ -15,26 +15,13 @@
               |
               | Quote selected
     .row.h-50
-      draggable.col-6.h-100(handle=".fa-sort" ghost-class="bg-secondary")
-        .card.mb-2(v-for="i in 10" :key="i")
-          .card-header.py-1.px-2
-            fa.mr-1.text-muted(icon="sort")
-            | Category - Text - {{ i }}
-            .float-right
-              fa.mr-1(icon="check")
-              fa(icon="times")
-          .card-body
-            textarea-autosize.form-control(rows="1")
-        button.btn.btn-primary
-          fa(icon="plus")
-          |
-          | Add block
+      Cards.col-6.h-100
       .col-6.h-75
         .row.h-100
           .col-12.h-100
             label Result:
             .h-75
-              textarea.form-control.mb-2.h-100.overflow-auto
+              textarea.form-control.mb-2.h-100.overflow-auto(:value="result")
           .col-12
             button.btn.btn-primary.float-right
               fa(icon="copy")
@@ -45,11 +32,17 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import Dictionary from '@/components/Dictionary.vue'
+import Cards from '@/components/Cards.vue'
+import { textModule } from '@/store'
 
 @Component({
-  components: { Dictionary },
+  components: { Cards, Dictionary },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  get result(): string {
+    return textModule.result
+  }
+}
 </script>
 
 <style lang="scss">
