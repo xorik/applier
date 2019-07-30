@@ -1,8 +1,11 @@
 import { Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { Category, Text } from './CategoryModule'
 
+type BlockStatus = 'new' | 'saved' | 'modified'
+
 export interface TextBlock {
   content: string
+  status: BlockStatus
   categoryId?: number
   categoryTitle?: string
   textId?: number
@@ -35,6 +38,7 @@ export class TextModule extends VuexModule {
     if (category && text) {
       this.blocks.push({
         content,
+        status: 'saved',
         categoryId: category.id,
         categoryTitle: category.title,
         textId: text.id,
@@ -43,13 +47,19 @@ export class TextModule extends VuexModule {
     } else {
       this.blocks.push({
         content,
+        status: 'new',
       })
     }
   }
 
   @Mutation
   public setContent({ content, index }: SetContentDto): void {
-    this.blocks[index].content = content
+    const block = this.blocks[index]
+
+    block.content = content
+    if (block.categoryId) {
+      block.status = 'modified'
+    }
   }
 
   @Mutation
