@@ -1,5 +1,5 @@
 <template lang="pug">
-  draggable.list-group.overflow-auto.mb-2(handle=".fa-sort" ghost-class="list-group-item-dark")
+  draggable.list-group.list-group-flush.border.rounded.overflow-auto.mb-2(handle=".fa-sort" ghost-class="list-group-item-dark")
     .list-group-item.list-group-item-action.py-1.px-2(
       v-for="item in items"
       :key="item.id"

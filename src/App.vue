@@ -1,32 +1,29 @@
 <template lang="pug">
-  .container.vh-100
-    .row.h-50
-      .col-6.h-75
-        Dictionary.h-100
-      .col-6.h-75
-        .row.h-100
-          .col-12.h-100
-            label Job description:
-            .h-75
-              textarea.form-control.mb-2.h-100.overflow-auto
-          .col-12
-            button.btn.btn-primary.float-right
-              fa(icon="chevron-right")
-              |
-              | Quote selected
-    .row.h-50
-      Cards.col-6.h-100
-      .col-6.h-75
-        .row.h-100
-          .col-12.h-100
+  .container-fluid.vh-100
+    .row.h-100
+      .col-4.h-100.d-flex.flex-column
+        label Job description:
+        .d-flex.align-items-stretch.h-100
+          textarea.form-control.mb-2.h-100.overflow-auto
+        .py-2
+          button.btn.btn-primary.float-right
+            fa(icon="chevron-right")
+            |
+            | Quote selected
+      .col-8.h-100
+        .h-50
+          Dictionary.h-100
+        .row.h-50
+          Cards.col-6.h-100
+          .col-6.h-100.d-flex.flex-column
             label Result:
-            .h-75
+            .d-flex.align-items-stretch.h-100
               textarea.form-control.mb-2.h-100.overflow-auto(:value="result")
-          .col-12
-            button.btn.btn-primary.float-right
-              fa(icon="copy")
-              |
-              | Copy text
+            .py-2
+              button.btn.btn-primary.float-right
+                fa(icon="copy")
+                |
+                | Copy text
 </template>
 
 <script lang="ts">

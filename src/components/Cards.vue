@@ -1,10 +1,20 @@
 <template lang="pug">
-  draggable(handle=".fa-sort" ghost-class="bg-secondary")
-    Card(v-for="(block, index) in blocks" :block="block" :key="index" @update="update($event, index)" @remove="remove(index)")
-    button.btn.btn-primary(@click="add")
-      fa(icon="plus")
-      |
-      | Add block
+  .d-flex.flex-column
+    .d-flex.align-items-stretch.overflow-auto.mh-100
+      draggable.w-100(handle=".fa-sort" ghost-class="bg-secondary")
+        Card(
+          v-for="(block, index) in blocks"
+          :block="block"
+          :key="index"
+          @update="update($event, index)"
+          @remove="remove(index)"
+          @save="save(block, index)"
+        )
+    .pb-2
+      button.btn.btn-primary(@click="add")
+        fa(icon="plus")
+        |
+        | Add block
 </template>
 
 <script lang="ts">

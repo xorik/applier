@@ -1,12 +1,13 @@
 <template lang="pug">
-  .row
-    .col-6.h-100.d-flex.flex-column
-      label Category:
-      SortableList(:items="categories" :current-id="currentCategory" @select="selectCategory")
-    .col-6.h-100.d-flex.flex-column
-      label Text:
-      SortableList(:items="texts" @select="selectText")
-    .col-12
+  .d-flex.flex-column
+    .row.d-flex.align-items-stretch.h-100
+      .col-6.h-100.d-flex.flex-column
+        label Category:
+        SortableList(:items="categories" :current-id="currentCategory" @select="selectCategory")
+      .col-6.h-100.d-flex.flex-column
+        label Text:
+        SortableList(:items="texts" @select="selectText")
+    .py-2
       button.btn.btn-primary(@click="addCategory")
         fa(icon="plus")
         |
