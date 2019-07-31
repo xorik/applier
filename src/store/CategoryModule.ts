@@ -1,4 +1,5 @@
 import { Module, Mutation, VuexModule } from 'vuex-module-decorators'
+import { getNextId, findById } from './utils'
 
 export interface Text {
   id: number
@@ -12,12 +13,15 @@ export interface Category {
   texts: Text[]
 }
 
-const getNextId = (items: Array<{ id: number }>): number => {
-  if (items.length === 0) {
-    return 1
-  }
+interface UpdateTextDto {
+  categoryId: number
+  textId: number
+  text: string
+}
 
-  return Math.max(...items.map((v: { id: number }): number => v.id)) + 1
+interface SaveTextDto {
+  title: string
+  text: string
 }
 
 @Module({ name: 'CategoryModule', namespaced: true })
@@ -38,14 +42,14 @@ export class CategoryModule extends VuexModule {
 
   public currentCategoryId: number | null = null
 
+  public lastTextId = 1
+
   get currentCategory(): Category | null {
     if (this.currentCategoryId === null) {
       return null
     }
 
-    return this.categories.find(
-      (category: Category): boolean => category.id === this.currentCategoryId,
-    )!
+    return findById(this.categories, this.currentCategoryId)!
   }
 
   get currentTexts(): Text[] {
@@ -68,5 +72,25 @@ export class CategoryModule extends VuexModule {
   @Mutation
   public setCurrentCategory(currentCategoryId: number): void {
     this.currentCategoryId = currentCategoryId
+  }
+
+  @Mutation
+  public updateText({ categoryId, textId, text }: UpdateTextDto): void {
+    const foundCategory = findById(this.categories, categoryId)!
+    const foundText = findById(foundCategory.texts, textId)!
+
+    foundText.text = text
+  }
+
+  @Mutation
+  public saveText({ title, text }: SaveTextDto): void {
+    const currentCategory = findById(this.categories, this.currentCategoryId!)!
+
+    this.lastTextId = this.lastTextId + 1
+    currentCategory!.texts.push({
+      id: this.lastTextId,
+      title,
+      text,
+    })
   }
 }

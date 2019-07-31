@@ -23,6 +23,12 @@ interface SetContentDto {
   index: number
 }
 
+interface SaveDto {
+  category: Category
+  text: Text
+  index: number
+}
+
 @Module({ name: 'TextModule', namespaced: true })
 export class TextModule extends VuexModule {
   public blocks: TextBlock[] = []
@@ -65,5 +71,24 @@ export class TextModule extends VuexModule {
   @Mutation
   public deleteBlock(index: number): void {
     this.blocks.splice(index, 1)
+  }
+
+  @Mutation
+  public setSaved(index: number): void {
+    this.blocks[index].status = 'saved'
+  }
+
+  @Mutation
+  public save({ category, text, index }: SaveDto): void {
+    const block = this.blocks[index]
+    const data = {
+      status: 'saved',
+      categoryId: category.id,
+      categoryTitle: category.title,
+      textId: text.id,
+      textTitle: text.title,
+    }
+
+    this.blocks[index] = Object.assign(block, data)
   }
 }

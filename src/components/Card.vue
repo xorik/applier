@@ -37,6 +37,10 @@ export default class Card extends Vue {
     this.$refs.text.$el.focus()
   }
 
+  public save(): void {
+    this.$emit('save')
+  }
+
   public remove(): void {
     this.$emit('remove')
   }

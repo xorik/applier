@@ -21,7 +21,8 @@
 import { Vue, Component } from 'vue-property-decorator'
 import Card from '@/components/Card.vue'
 import { TextBlock } from '@/store/TextModule'
-import { textModule } from '@/store'
+import { categoryModule, textModule } from '@/store'
+import { findById } from '@/store/utils'
 
 @Component({
   components: { Card },
@@ -44,6 +45,46 @@ export default class Cards extends Vue {
 
   public remove(index: number): void {
     textModule.deleteBlock(index)
+  }
+
+  public save(block: TextBlock, index: number): void {
+    if (block.status === 'modified') {
+      const message = `Overwrite text for ${block.categoryTitle} - ${block.textTitle}?`
+      if (!confirm(message)) {
+        return
+      }
+
+      categoryModule.updateText({
+        categoryId: block.categoryId!,
+        textId: block.textId!,
+        text: block.content,
+      })
+      textModule.setSaved(index)
+    } else if (block.status === 'new') {
+      if (categoryModule.currentCategoryId === null) {
+        return
+      }
+
+      const title = prompt('Enter title:')
+
+      if (title !== '' && title !== null) {
+        categoryModule.saveText({
+          text: block.content,
+          title,
+        })
+
+        const text = findById(
+          categoryModule.currentTexts,
+          categoryModule.lastTextId,
+        )!
+
+        textModule.save({
+          category: categoryModule.currentCategory!,
+          text,
+          index,
+        })
+      }
+    }
   }
 }
 </script>
