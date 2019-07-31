@@ -6,7 +6,7 @@
         .d-flex.align-items-stretch.h-100
           textarea.form-control.mb-2.h-100.overflow-auto
         .py-2
-          button.btn.btn-primary.float-right
+          button.btn.btn-outline-primary.float-right
             fa(icon="chevron-right")
             |
             | Quote selected
@@ -20,8 +20,8 @@
             .d-flex.align-items-stretch.h-100
               textarea.form-control.mb-2.h-100.overflow-auto(:value="result")
             .py-2
-              button.btn.btn-primary.float-right
-                fa(icon="copy")
+              button.btn.btn-outline-primary.float-right
+                fa(:icon="['far', 'copy']")
                 |
                 | Copy text
 </template>
@@ -43,7 +43,7 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-@import '~bootswatch/dist/lumen/variables';
+@import '~bootswatch/dist/sandstone/variables';
 @import '~bootstrap/scss/bootstrap';
-@import '~bootswatch/dist/lumen/bootswatch';
+@import '~bootswatch/dist/sandstone/bootswatch';
 </style>

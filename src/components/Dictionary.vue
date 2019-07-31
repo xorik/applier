@@ -8,7 +8,7 @@
         label Text:
         SortableList(:items="texts" @select="selectText")
     .py-2
-      button.btn.btn-primary(@click="addCategory")
+      button.btn.btn-outline-primary(@click="addCategory")
         fa(icon="plus")
         |
         | Add category

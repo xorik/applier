@@ -11,7 +11,7 @@
           @save="save(block, index)"
         )
     .pb-2
-      button.btn.btn-primary(@click="add")
+      button.btn.btn-outline-primary(@click="add")
         fa(icon="plus")
         |
         | Add block
