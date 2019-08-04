@@ -8,7 +8,8 @@
     )
       fa.mr-1.text-muted(icon="sort")
       .float-right
-        fa(icon="times")
+        a.text-muted
+          fa(icon="times" @click.stop="remove(item)")
       | {{item.title}}
 </template>
 
@@ -31,6 +32,10 @@ export default class SortableList extends Vue {
 
   public select(item: Category | Text): void {
     this.$emit('select', item)
+  }
+
+  public remove(item: Category | Text): void {
+    this.$emit('remove', item)
   }
 }
 </script>

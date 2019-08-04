@@ -75,11 +75,32 @@ export class CategoryModule extends VuexModule {
   }
 
   @Mutation
+  public removeCategory(categoryId: number): void {
+    const index = this.categories.findIndex(
+      (v: Category): boolean => v.id === categoryId,
+    )
+    this.categories.splice(index, 1)
+    if (this.currentCategoryId === categoryId) {
+      this.currentCategoryId = null
+    }
+  }
+
+  @Mutation
   public updateText({ categoryId, textId, text }: UpdateTextDto): void {
     const foundCategory = findById(this.categories, categoryId)!
     const foundText = findById(foundCategory.texts, textId)!
 
     foundText.text = text
+  }
+
+  @Mutation
+  public removeText(textId: number): void {
+    const currentCategory = findById(this.categories, this.currentCategoryId!)!
+    const index = currentCategory.texts.findIndex(
+      (v: Text): boolean => v.id === textId,
+    )
+
+    currentCategory.texts.splice(index, 1)
   }
 
   @Mutation

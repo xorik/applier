@@ -3,10 +3,19 @@
     .row.d-flex.align-items-stretch.h-100
       .col-6.h-100.d-flex.flex-column
         label Category:
-        SortableList(:items="categories" :current-id="currentCategory" @select="selectCategory")
+        SortableList(
+          :items="categories"
+          :current-id="currentCategory"
+          @select="selectCategory"
+          @remove="removeCategory"
+        )
       .col-6.h-100.d-flex.flex-column
         label Text:
-        SortableList(:items="texts" @select="selectText")
+        SortableList(
+          :items="texts"
+          @select="selectText"
+          @remove="removeText"
+        )
     .py-2
       button.btn.btn-outline-primary(@click="addCategory")
         fa(icon="plus")
@@ -45,6 +54,18 @@ export default class Dictionary extends Vue {
 
   public selectCategory(category: Category): void {
     categoryModule.setCurrentCategory(category.id)
+  }
+
+  public removeCategory(category: Category): void {
+    if (confirm(`Remove category ${category.title}?`)) {
+      categoryModule.removeCategory(category.id)
+    }
+  }
+
+  public removeText(text: Text): void {
+    if (confirm(`Remove text ${text.title}?`)) {
+      categoryModule.removeText(text.id)
+    }
   }
 
   public selectText(text: Text): void {
